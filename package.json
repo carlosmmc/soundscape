@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/carlosmmc/soundscape#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "spotify-web-api-node": "^5.0.2"
   }
 }
