@@ -1,0 +1,23 @@
+{
+  "name": "soundscape",
+  "version": "1.0.0",
+  "description": "",
+  "main": "\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosmmc/soundscape.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlosmmc/soundscape/issues"
+  },
+  "homepage": "https://github.com/carlosmmc/soundscape#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
