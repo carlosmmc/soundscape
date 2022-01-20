@@ -20,15 +20,47 @@ spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 
 // endpoints
 app.get('/', async (req, res) => {
-    spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE').then(
-        function (data) {
-            console.log('Artist albums', data.body);
-        },
-        function (err) {
-            console.error(err);
+    try {
+        // get artist and id - could also get 'followers'.total
+        const artist_name = 'Bon Iver'
+        const artist_info = await spotifyApi.searchArtists(artist_name, { limit: 1 })
+        const { id, genres, name, popularity } = artist_info.body.artists.items[0]
+
+        // get top tracks
+        const top_tracks = await spotifyApi.getArtistTopTracks(id, 'US')
+        const track_ids = top_tracks.body.tracks.map(info => info.id)
+
+        // get audio analysis
+        const audio_analysis = await spotifyApi.getAudioFeaturesForTracks(track_ids)
+        const num_tracks = Object.keys(audio_analysis.body.audio_features).length
+
+        const agg_analysis = {
+            'danceability': 0, 'energy': 0, 'speechiness': 0,
+            'acousticness': 0, 'liveness': 0, 'valence': 0
         }
-    );
-    res.send('houston we have many problems, but at least we are able to comunicate')
+
+        for (const track of audio_analysis.body.audio_features) {
+            for (const feature of Object.keys(agg_analysis)) {
+                agg_analysis[feature] += track[feature]
+            }
+        }
+
+        for (const feature of Object.keys(agg_analysis)) {
+            agg_analysis[feature] /= num_tracks
+        }
+
+        const response = `<b>artist</b>: ${artist_name}`
+            + `<br/><b>artist_id</b>: ${id}`
+            + `<br/><b>genres</b>: ${genres}`
+            + `<br/><b>number of tracks analyzed:</b> ${num_tracks}`
+            + `<br/><b>track analytics:</b> ${JSON.stringify(agg_analysis)}`
+
+        console.log(response)
+        res.send(response)
+
+    } catch (error) {
+        res.send(error)
+    }
 })
 
 // listen on server
