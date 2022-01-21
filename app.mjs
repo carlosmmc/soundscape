@@ -18,12 +18,17 @@ var spotifyApi = new SpotifyWebApi({
 
 spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 
+// homepage
+app.get('/', (req, res) => {
+    res.send('homepage!!!')
+})
+
 // endpoints
-app.get('/', async (req, res) => {
+app.get('/artist/:name', async (req, res) => {
     try {
         // get artist and id - could also get 'followers'.total
-        const artist_name = 'Bon Iver'
-        const artist_info = await spotifyApi.searchArtists(artist_name, { limit: 1 })
+        const search = req.params.name
+        const artist_info = await spotifyApi.searchArtists(search, { limit: 1 })
         const { id, genres, name, popularity } = artist_info.body.artists.items[0]
 
         // get top tracks
@@ -49,19 +54,20 @@ app.get('/', async (req, res) => {
             agg_analysis[feature] /= num_tracks
         }
 
-        const response = `<b>artist</b>: ${artist_name}`
+        const response = `<b>artist</b>: ${search}`
             + `<br/><b>artist_id</b>: ${id}`
             + `<br/><b>genres</b>: ${genres}`
             + `<br/><b>number of tracks analyzed:</b> ${num_tracks}`
             + `<br/><b>track analytics:</b> ${JSON.stringify(agg_analysis)}`
 
-        console.log(response)
         res.send(response)
 
     } catch (error) {
-        res.send(error)
+        console.log(error)
+        res.send('error')
     }
-})
+}
+)
 
 // listen on server
 app.listen(PORT, () => {
