@@ -20,7 +20,8 @@ spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 
 // homepage
 app.get('/', (req, res) => {
-    res.send('homepage!!!')
+    res.sendFile('tester.html', { root: './public/' })
+    // res.send('homepage!!!')
 })
 
 // endpoints
@@ -60,7 +61,9 @@ app.get('/artist/:name', async (req, res) => {
             + `<br/><b>number of tracks analyzed:</b> ${num_tracks}`
             + `<br/><b>track analytics:</b> ${JSON.stringify(agg_analysis)}`
 
-        res.send(response)
+        const yeet = 'hi'
+
+        res.sendFile('tester.html')
 
     } catch (error) {
         console.log(error)
