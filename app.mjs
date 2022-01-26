@@ -21,11 +21,10 @@ spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 // homepage
 app.get('/', (req, res) => {
     res.sendFile('tester.html', { root: './public/' })
-    // res.send('homepage!!!')
 })
 
 // endpoints
-app.get('/artist/:name', async (req, res) => {
+app.get('/artist_info/:name', async (req, res) => {
     try {
         // get artist and id - could also get 'followers'.total
         const search = req.params.name
@@ -61,9 +60,7 @@ app.get('/artist/:name', async (req, res) => {
             + `<br/><b>number of tracks analyzed:</b> ${num_tracks}`
             + `<br/><b>track analytics:</b> ${JSON.stringify(agg_analysis)}`
 
-        const yeet = 'hi'
-
-        res.sendFile('tester.html')
+        res.send(response)
 
     } catch (error) {
         console.log(error)
