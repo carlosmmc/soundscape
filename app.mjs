@@ -18,49 +18,58 @@ var spotifyApi = new SpotifyWebApi({
 
 spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 
-// homepage
-app.get('/', (req, res) => {
-    res.sendFile('tester.html', { root: './public/' })
-})
-
 // endpoints
-app.get('/artist_info/:name', async (req, res) => {
+app.get('/artist/:name', async (req, res) => {
     try {
         // get artist and id - could also get 'followers'.total
-        const search = req.params.name
-        const artist_info = await spotifyApi.searchArtists(search, { limit: 1 })
-        const { id, genres, name, popularity } = artist_info.body.artists.items[0]
+        const search_term = req.params.name
+        const artist_info = await spotifyApi.searchArtists(search_term, { limit: 1 })
+        const {
+            id: artist_id,
+            genres,
+            name: artist_name,
+            popularity,
+            images: artist_images,
+            followers: { total: followers }
+        } = artist_info.body.artists.items[0]
 
         // get top tracks
-        const top_tracks = await spotifyApi.getArtistTopTracks(id, 'US')
-        const track_ids = top_tracks.body.tracks.map(info => info.id)
+        const top_tracks = await spotifyApi.getArtistTopTracks(artist_id, 'US')
+        const top_track_ids = top_tracks.body.tracks.map(info => info.id)
 
         // get audio analysis
-        const audio_analysis = await spotifyApi.getAudioFeaturesForTracks(track_ids)
+        const audio_analysis = await spotifyApi.getAudioFeaturesForTracks(top_track_ids)
         const num_tracks = Object.keys(audio_analysis.body.audio_features).length
 
-        const agg_analysis = {
-            'danceability': 0, 'energy': 0, 'speechiness': 0,
-            'acousticness': 0, 'liveness': 0, 'valence': 0
+        const style_analytics = {
+            'danceability': 0, 'energy': 0, 'speechiness': 0, 'instrumentalness': 0,
+            'acousticness': 0, 'liveness': 0, 'valence': 0,
         }
 
         for (const track of audio_analysis.body.audio_features) {
-            for (const feature of Object.keys(agg_analysis)) {
-                agg_analysis[feature] += track[feature]
+            for (const feature of Object.keys(style_analytics)) {
+                style_analytics[feature] += track[feature]
             }
         }
 
-        for (const feature of Object.keys(agg_analysis)) {
-            agg_analysis[feature] /= num_tracks
+        for (const feature of Object.keys(style_analytics)) {
+            style_analytics[feature] /= num_tracks
         }
 
-        const response = `<b>artist</b>: ${search}`
-            + `<br/><b>artist_id</b>: ${id}`
-            + `<br/><b>genres</b>: ${genres}`
-            + `<br/><b>number of tracks analyzed:</b> ${num_tracks}`
-            + `<br/><b>track analytics:</b> ${JSON.stringify(agg_analysis)}`
+        const related_artists_full = await spotifyApi.getArtistRelatedArtists(artist_id)
+        const related_artists = []
 
-        res.send(response)
+        for (const sibling of related_artists_full.body.artists) {
+            const { id, name, images } = sibling
+            related_artists.push({ id, name, images })
+        }
+
+        const compendium = {
+            'id': artist_id, genres, 'name': artist_name, popularity, 'images': artist_images,
+            followers, top_track_ids, style_analytics, related_artists
+        }
+
+        res.send(JSON.stringify(compendium))
 
     } catch (error) {
         console.log(error)
