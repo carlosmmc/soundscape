@@ -6,6 +6,8 @@ const errorCatcher = (f) => {
 }
 
 const errorHandler = (err, req, res, next) => {
+    console.log(err.message)
+    console.log('hi there')
     res.status(500).send(err.message)
 }
 
