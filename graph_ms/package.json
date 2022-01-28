@@ -12,6 +12,6 @@
   "dependencies": {
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
-    "node-fetch": "^3.2.0"
+    "quickchart-js": "^2.0.3"
   }
 }
