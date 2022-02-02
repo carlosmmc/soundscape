@@ -8,7 +8,7 @@ import { artist_compendium } from './compendium_creation/artist.mjs'
 import { errorCatcher, errorHandler } from './utils/errorHelper.mjs'
 
 // set intiial variables
-const PORT = 3000
+const PORT = process.env.PORT
 const app = express()
 
 // initialize spotify api
