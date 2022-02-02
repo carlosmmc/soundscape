@@ -25,6 +25,16 @@ app.use('/', (req, res, next) => {
     next()
 })
 
+// middleware for CORS policy
+let allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+app.use(allowCrossDomain);
+
 // endpoints
 app.get('/artist/:name', errorCatcher(artist_compendium))
 

@@ -5,16 +5,6 @@ import Home from './pages/Home'
 import ArtistView from './pages/ArtistView'
 import { useState } from 'react'
 
-// import fetch from "node-fetch"
-
-// const test_func = async () => {
-//   alert('hi')
-//   const path = 'http://localhost:3000/artist/skizzy mars'
-//   const response = await fetch(path, { method: 'GET' })
-//   const data = await response.json()
-//   return data
-// }
-
 function App() {
   const [artistInfo, setArtistInfo] = useState('')
 
