@@ -1,18 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import populate_artist_view from '../utils/microservice_highway.mjs';
 
 const Home = ({ setArtistInfo }) => {
     const [searchTerm, setSearchTerm] = useState('')
     const navigate = useNavigate()
-
-    const test_func = async (navigate, setArtistInfo, searchTerm) => {
-        const path = `http://localhost:4000/artist/${searchTerm}`
-        const response = await fetch(path, { method: 'GET' })
-        const data = await response.json()
-        setArtistInfo(data)
-        navigate('/artist')
-    }
 
     return (
         <div>
@@ -26,7 +19,7 @@ const Home = ({ setArtistInfo }) => {
                 <button
                     onClick={e => {
                         setSearchTerm(e.target.value)
-                        test_func(navigate, setArtistInfo, searchTerm)
+                        populate_artist_view(navigate, setArtistInfo, searchTerm)
                         e.preventDefault()
                     }}>
                     Submit </button>

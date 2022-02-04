@@ -34,7 +34,8 @@ const chart_maker = (async (req, res) => {
         url = chart.getUrl()
     }
 
-    res.send(url)
+    const result = { graph_url: url }
+    res.send(result)
 })
 
 export { chart_maker }
