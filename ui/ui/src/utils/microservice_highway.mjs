@@ -3,7 +3,7 @@ const populate_artist_view = async (navigate, setArtistInfo, searchTerm) => {
     const response = await fetch(path, { method: 'GET' })
     const data = await response.json()
     data.graph_url = await generate_graph_url(data)
-    console.log(data)
+
     setArtistInfo(data)
     navigate('/artist')
 }
@@ -35,7 +35,7 @@ const generate_graph_url = async (data) => {
             },
             options: {
                 legend: { display: false },
-                title: { display: true, text: `${data.name} Musical Analysis` },
+                title: { display: true, text: 'Musical Analysis' },
                 scale: { ticks: { display: false } },
             }
         },
@@ -43,7 +43,7 @@ const generate_graph_url = async (data) => {
         height: 240
     }
 
-    const path = 'http://localhost:9000/generateGraph'
+    const path = 'http://localhost:8000/generateGraph'
 
     const response = await fetch(path, {
         method: 'POST',
