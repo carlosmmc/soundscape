@@ -5,20 +5,14 @@ import express from 'express'
 import 'dotenv/config'
 import { chart_maker } from './utils/graphs.mjs'
 import { errorCatcher, errorHandler } from './utils/errorHelper.mjs'
+import allowCrossDomain from './utils/CORS.mjs'
 
 // set intiial variables
-const PORT = 9000
+const PORT = process.env.PORT
 const app = express()
 
 
 // middleware for CORS policy
-let allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
-
 app.use(allowCrossDomain);
 
 // middleware

@@ -2,15 +2,21 @@
 
 import QuickChart from 'quickchart-js'
 
-// mandatory
-//    config - values going into setConfig
-
-// optional
-//    width - int
-//    height - int
-//    format - png | svg
-//    backgroundColor - any valid HTML color works
-//    useShort - True/False (uses webservice to create fixed-length URL)
+/**
+ * This function creates the graph based on the user inputs.
+ * 
+ * REQUIRED
+ * --------
+ * config: see chart.js requirements for details
+ * 
+ * OPTIONAL
+ * --------
+ * width - int representing width of chart of pixels, defaults to 500
+ * height - int representing height of chart in pixels, defaults to 300
+ * format - sets format of chat, default is png, the only other acceptable value is svg
+ * backgroundColor - background color of chart, any valid HTML color is acceptable
+ * useShort - boolean indicating whether to use quickchart web service to create fixed length URL 
+ */
 
 const chart_maker = (async (req, res) => {
     const { config, width, height, format, backgroundColor, useShort } = req.body
