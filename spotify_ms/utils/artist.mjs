@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * main spotify logic which gathers information about a given artist. it will return
+ * an object with the following: artist information, style composition, top track ids and
+ * related artists
+ */
 const main = async (req, res, next) => {
     const { spotify_conn } = req
     const artist_results = await artist_search(spotify_conn, req.params.name)
@@ -11,18 +16,31 @@ const main = async (req, res, next) => {
     res.send(JSON.stringify(compendium))
 }
 
+/**
+ * searches for a given artist using the spotify api. upon success it returns the
+ * following: artist id, genre, name, popularity, images and followers.
+ */
 const artist_search = async (spotify_conn, search_term) => {
     const response = await spotify_conn.searchArtists(search_term, { limit: 1 })
     const { id, genres, name, popularity, images, followers: { total: followers } } = response.body.artists.items[0]
     return { id, genres, name, popularity, images, followers }
 }
 
+/**
+ * searches for the top tracks of an artist. upon success it returns an array of
+ * track ids.
+*/
 const query_top_tracks = async (spotify_conn, artist_id, market = 'US') => {
     const response = await spotify_conn.getArtistTopTracks(artist_id, market)
     const top_track_ids = response.body.tracks.map(info => info.id)
     return top_track_ids
 }
 
+/**
+ * analyzes an input of track ids and gets the average of the following musical
+ * metrics: danceability, energy, speechiness, instrumentalness, acousticness, liveness,
+ * valence
+*/
 const analyze_tracks = async (spotify_conn, track_ids) => {
     const response = await spotify_conn.getAudioFeaturesForTracks(track_ids)
     const num_tracks = Object.keys(response.body.audio_features).length
@@ -45,6 +63,9 @@ const analyze_tracks = async (spotify_conn, track_ids) => {
     return style_analytics
 }
 
+/**
+ * searches for related artists. upon success it returns an array of artist ids
+*/
 const query_related_artists = async (spotify_conn, artist_id) => {
     const response = await spotify_conn.getArtistRelatedArtists(artist_id)
     const related_artists = []
@@ -57,6 +78,9 @@ const query_related_artists = async (spotify_conn, artist_id) => {
     return related_artists
 }
 
+/**
+ * compiles results into an object
+*/
 const compile_results = (artist_results, style_analytics, top_track_ids, related_artists) => {
     const compendium = Object.assign({}, artist_results)
     compendium['style_analytics'] = style_analytics

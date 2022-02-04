@@ -4,8 +4,9 @@
 import express from 'express'
 import SpotifyWebApi from 'spotify-web-api-node'
 import 'dotenv/config'
-import { artist_compendium } from './compendium_creation/artist.mjs'
+import { artist_compendium } from './utils/artist.mjs'
 import { errorCatcher, errorHandler } from './utils/errorHelper.mjs'
+import allowCrossDomain from './utils/CORS.mjs'
 
 // set intiial variables
 const PORT = process.env.PORT
@@ -26,13 +27,6 @@ app.use('/', (req, res, next) => {
 })
 
 // middleware for CORS policy
-let allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
-
 app.use(allowCrossDomain);
 
 // endpoints
