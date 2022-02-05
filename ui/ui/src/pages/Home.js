@@ -9,12 +9,11 @@ const Home = ({ setArtistInfo }) => {
 
     return (
         <div>
-            <h1>soundscape</h1>
+            <h1>~soundscape~</h1>
             <form>
                 <fieldset>
-                    <label>artist name
-                        <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                    </label>
+                    <p>artist search</p>
+                    <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                 </fieldset>
                 <button
                     onClick={e => {
@@ -24,6 +23,12 @@ const Home = ({ setArtistInfo }) => {
                     }}>
                     Submit </button>
             </form>
+            <p>
+                enter an artist name above to discover new music you'll love!!
+            </p>
+            <p>
+                the app is fast so you can search for many artists back to back!
+            </p>
         </div>
     );
 }
