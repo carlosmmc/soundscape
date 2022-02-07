@@ -1,3 +1,4 @@
+import '../styling/home.css'
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -8,20 +9,18 @@ const Home = ({ setArtistInfo }) => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            <h1>soundscape</h1>
+        <div className="HomePage">
+            <h1 className="HomeTitle">soundscape</h1>
             <form>
-                <fieldset>
-                    <p>artist search</p>
-                    <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                </fieldset>
-                <button
+                <input className="HomeInput" type="text" placeholder="Artist Name" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                <br></br>
+                <button className="HomeButton"
                     onClick={e => {
                         setSearchTerm(e.target.value)
                         populate_artist_view(navigate, setArtistInfo, searchTerm)
                         e.preventDefault()
                     }}>
-                    Submit </button>
+                    Search </button>
             </form>
         </div>
     );
