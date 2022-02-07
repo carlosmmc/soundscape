@@ -9,7 +9,7 @@ const Home = ({ setArtistInfo }) => {
 
     return (
         <div>
-            <h1>~soundscape~</h1>
+            <h1>soundscape</h1>
             <form>
                 <fieldset>
                     <p>artist search</p>
@@ -23,12 +23,6 @@ const Home = ({ setArtistInfo }) => {
                     }}>
                     Submit </button>
             </form>
-            <p>
-                enter an artist name above to discover new music you'll love!!
-            </p>
-            <p>
-                the app is fast so you can search for many artists back to back!
-            </p>
         </div>
     );
 }
