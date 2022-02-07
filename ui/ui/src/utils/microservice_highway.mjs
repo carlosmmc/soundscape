@@ -1,11 +1,15 @@
 const populate_artist_view = async (navigate, setArtistInfo, searchTerm) => {
-    const path = `http://localhost:4000/artist/${searchTerm}`
-    const response = await fetch(path, { method: 'GET' })
-    const data = await response.json()
-    data.graph_url = await generate_graph_url(data)
+    try {
+        const path = `http://localhost:4000/artist/${searchTerm}`
+        const response = await fetch(path, { method: 'GET' })
+        const data = await response.json()
+        data.graph_url = await generate_graph_url(data)
 
-    setArtistInfo(data)
-    navigate('/artist')
+        setArtistInfo(data)
+        navigate('/artist')
+    } catch {
+        navigate('/error')
+    }
 }
 
 const generate_graph_url = async (data) => {

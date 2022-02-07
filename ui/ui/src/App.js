@@ -3,6 +3,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from './pages/Home'
 import ArtistView from './pages/ArtistView'
+import ErrorPage from './pages/ErrorPage'
 import { useState } from 'react'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home setArtistInfo={setArtistInfo} />} />
             <Route path="/artist" element={<ArtistView artistInfo={artistInfo} />} />
+            <Route path="/error" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       </header>
