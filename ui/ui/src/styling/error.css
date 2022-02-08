@@ -1,0 +1,44 @@
+.ErrorPage {
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ErrorTitle {
+    font-size: 170px;
+    margin: 0px;
+    font-weight: 900;
+    background: url(https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80) 40%;
+    background-clip: text;
+    color: transparent;
+}    
+
+.GoHome {
+    color: white;
+    border-radius: 20px;
+    width: 9rem;
+    height: 2.3rem;
+    background-color: #452d75;
+    font-size: 22px;
+    border: 0;
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.SubTitle{
+    color: black;
+    font-size: 35px;
+    margin: 10px;
+}
+
+.ErrorText{
+    color: black;
+    margin: 0px;
+    font-size: 22px;
+    width: 40%;
+}
