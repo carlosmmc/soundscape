@@ -1,12 +1,26 @@
 const populate_artist_view = async (navigate, setArtistInfo, searchTerm) => {
     try {
-        const path = `http://localhost:4000/artist/${searchTerm}`
-        const response = await fetch(path, { method: 'GET' })
-        const data = await response.json()
-        data.graph_url = await generate_graph_url(data)
+        const path = 'http://localhost:4000/artist'
+        const response = await fetch(path, {
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    'artist': searchTerm,
+                    'token': 'BQDq7T_7p6eAhDkVasvOv1SLuy0_Oim22PHwlc5ok8YMTlFqFKUhEYxy7pfCLZBXunHXYdq6B9p_hHnkf2zAmqH2FEC8qQkD3g87wsCUfYEIZ-IzfchVHdkj480UoTZJ4J5niJJoNZVvKJRo82lVge5MRFIUwFni6IA'
+                }
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-        setArtistInfo(data)
-        navigate('/artist')
+        const data = await response.json()
+        console.log(data)
+        navigate('/')
+        // data.graph_url = await generate_graph_url(data)
+
+        // setArtistInfo(data)
+        // navigate('/artist')
     } catch {
         navigate('/error')
     }

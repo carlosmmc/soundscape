@@ -13,12 +13,7 @@ const PORT = process.env.PORT
 const app = express()
 
 // initialize spotify api
-var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    redirectUri: 'http://localhost:3000/'
-})
-spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
+var spotifyApi = new SpotifyWebApi()
 
 // middleware to assign the spotify connection to request
 app.use('/', (req, res, next) => {
@@ -29,8 +24,16 @@ app.use('/', (req, res, next) => {
 // middleware for CORS policy
 app.use(allowCrossDomain);
 
+// middleware for parsing JSON
+app.use(express.json())
+
 // endpoints
-app.get('/artist/:name', errorCatcher(artist_compendium))
+app.post('/artist', errorCatcher(artist_compendium))
+
+app.post('/testing', (req, res) => {
+    console.log(req.body)
+    res.send({ 'hi': 'there' })
+})
 
 // error handling
 app.use(errorHandler)

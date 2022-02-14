@@ -7,7 +7,8 @@
  */
 const main = async (req, res, next) => {
     const { spotify_conn } = req
-    const artist_results = await artist_search(spotify_conn, req.params.name)
+    spotify_conn.setAccessToken(req.body.token)
+    const artist_results = await artist_search(spotify_conn, req.body.artist)
     const [top_track_ids, related_artists] = await Promise.all([
         query_top_tracks(spotify_conn, artist_results.id),
         query_related_artists(spotify_conn, artist_results.id)])

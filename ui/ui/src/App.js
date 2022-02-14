@@ -17,6 +17,7 @@ function App() {
             <Route path="/" element={<Home setArtistInfo={setArtistInfo} />} />
             <Route path="/artist" element={<ArtistView artistInfo={artistInfo} />} />
             <Route path="/error" element={<ErrorPage />} />
+            <Route path="/login" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       </header>
