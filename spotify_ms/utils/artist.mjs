@@ -7,7 +7,8 @@
  */
 const main = async (req, res, next) => {
     const { spotify_conn } = req
-    spotify_conn.setAccessToken(req.body.token)
+    // spotify_conn.setAccessToken(req.body.token)
+    spotify_conn.setAccessToken('BQAwrgq3bBtHZWZeJzLPRFu12BlIQnG4StHo2Bq58MQofxXl-wxiOsvM8PT0roeeDZrvXGNr6tjJWL9oqcgrLbN7ef1Iv-NPZtGtSolaWAmmAT7Y0bBxClCL8f6OsBZogZgxsbBN9ZyYLv83XGKduDjPRRKwXF61NrY')
     const artist_results = await artist_search(spotify_conn, req.body.artist)
     const [top_track_ids, related_artists] = await Promise.all([
         query_top_tracks(spotify_conn, artist_results.id),

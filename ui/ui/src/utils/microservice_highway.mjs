@@ -15,12 +15,12 @@ const populate_artist_view = async (navigate, setArtistInfo, searchTerm) => {
         })
 
         const data = await response.json()
-        console.log(data)
-        navigate('/')
-        // data.graph_url = await generate_graph_url(data)
+        // console.log(data)
+        // navigate('/')
+        data.graph_url = await generate_graph_url(data)
 
-        // setArtistInfo(data)
-        // navigate('/artist')
+        setArtistInfo(data)
+        navigate('/artist')
     } catch {
         navigate('/error')
     }

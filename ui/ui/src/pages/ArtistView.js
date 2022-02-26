@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import save_graph from '../utils/graph_saver'
 
 const ArtistView = ({ artistInfo }) => {
     return (
@@ -9,9 +10,13 @@ const ArtistView = ({ artistInfo }) => {
             <p>genres: {artistInfo.genres.join(", ")}</p>
             <p>popularity: {artistInfo.popularity}</p>
             <p>followers: {artistInfo.followers}</p>
-            <p>bio: coming soon</p>
             <p>related artists: {artistInfo.related_artists.map(a => a.name).join(", ")}</p>
             <img src={artistInfo.graph_url} />
+            <br />
+            <button onClick={e => {
+                save_graph(artistInfo.graph_url, artistInfo.name)
+                e.preventDefault()
+            }}> Download </button>
             <br />
             <Link to="/">Home Page</Link>
         </div>

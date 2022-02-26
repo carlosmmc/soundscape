@@ -10,7 +10,6 @@ const Home = ({ setArtistInfo }) => {
 
     return (
         <div className="HomePage">
-            <button>login</button>
             <h1 className="HomeTitle">soundscape</h1>
             <form>
                 <input className="HomeInput" type="text" placeholder="Artist Name" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
