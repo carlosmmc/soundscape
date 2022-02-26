@@ -10,11 +10,10 @@ var download = function (uri, filename, callback) {
 
 export const save = async (req, res) => {
   const { url, savePath } = req.body
+  console.log('recieved request to save photo!')
 
   download(url, savePath, function () {
-    console.log('saved to: ', savePath)
-    console.log('done');
-
+    console.log('finished saving photo!')
   });
 
   res.send('complete')
