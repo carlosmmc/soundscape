@@ -5,15 +5,20 @@ import express from 'express'
 import SpotifyWebApi from 'spotify-web-api-node'
 import 'dotenv/config'
 import { artist_compendium } from './utils/artist.mjs'
-import { errorCatcher, errorHandler } from './utils/errorHelper.mjs'
-import allowCrossDomain from './utils/CORS.mjs'
+import { error_catcher, error_handler } from './utils/errorHelper.mjs'
+import allow_cross_domain from './utils/CORS.mjs'
 
 // set intiial variables
 const PORT = process.env.PORT
 const app = express()
 
 // initialize spotify api
-var spotifyApi = new SpotifyWebApi()
+var spotifyApi = new SpotifyWebApi({
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+    redirectUri: 'http://localhost:3000/'
+})
+spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
 
 // middleware to assign the spotify connection to request
 app.use('/', (req, res, next) => {
@@ -22,21 +27,16 @@ app.use('/', (req, res, next) => {
 })
 
 // middleware for CORS policy
-app.use(allowCrossDomain);
+app.use(allow_cross_domain);
 
 // middleware for parsing JSON
 app.use(express.json())
 
 // endpoints
-app.post('/artist', errorCatcher(artist_compendium))
-
-app.post('/testing', (req, res) => {
-    console.log(req.body)
-    res.send({ 'hi': 'there' })
-})
+app.post('/artist', error_catcher(artist_compendium))
 
 // error handling
-app.use(errorHandler)
+app.use(error_handler)
 
 // listen on server
 app.listen(PORT, () => {

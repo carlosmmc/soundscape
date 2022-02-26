@@ -1,13 +1,13 @@
 'use strict'
 
-const errorCatcher = (f) => {
-    const wrappedFunc = (req, res, next) => f(req, res).catch(next)
-    return wrappedFunc
+const error_catcher = (f) => {
+    const wrapped_func = (req, res, next) => f(req, res).catch(next)
+    return wrapped_func
 }
 
-const errorHandler = (err, req, res, next) => {
+const error_handler = (err, req, res, next) => {
     console.log(err.message)
     res.status(500).send(err.message)
 }
 
-export { errorCatcher, errorHandler }
+export { error_catcher, error_handler }

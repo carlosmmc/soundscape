@@ -7,14 +7,15 @@
  */
 const main = async (req, res, next) => {
     const { spotify_conn } = req
-    // spotify_conn.setAccessToken(req.body.token)
-    spotify_conn.setAccessToken('BQAwrgq3bBtHZWZeJzLPRFu12BlIQnG4StHo2Bq58MQofxXl-wxiOsvM8PT0roeeDZrvXGNr6tjJWL9oqcgrLbN7ef1Iv-NPZtGtSolaWAmmAT7Y0bBxClCL8f6OsBZogZgxsbBN9ZyYLv83XGKduDjPRRKwXF61NrY')
     const artist_results = await artist_search(spotify_conn, req.body.artist)
+
     const [top_track_ids, related_artists] = await Promise.all([
         query_top_tracks(spotify_conn, artist_results.id),
         query_related_artists(spotify_conn, artist_results.id)])
+
     const style_analytics = await analyze_tracks(spotify_conn, top_track_ids)
     const compendium = compile_results(artist_results, style_analytics, top_track_ids, related_artists)
+
     res.send(JSON.stringify(compendium))
 }
 
@@ -73,6 +74,7 @@ const query_related_artists = async (spotify_conn, artist_id) => {
     const related_artists = []
 
     for (const sibling of response.body.artists) {
+        if (related_artists.length == 5) { break }
         const { id, name, images } = sibling
         related_artists.push({ id, name, images })
     }
