@@ -13,12 +13,7 @@ const PORT = process.env.PORT
 const app = express()
 
 // initialize spotify api
-var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    redirectUri: 'http://localhost:3000/'
-})
-spotifyApi.setAccessToken(process.env.SPOTIFY_TOKEN)
+var spotifyApi = new SpotifyWebApi({ redirectUri: 'http://localhost:3000/' })
 
 // middleware to assign the spotify connection to request
 app.use('/', (req, res, next) => {
