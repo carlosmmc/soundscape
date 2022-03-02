@@ -5,6 +5,7 @@ import save_graph from '../utils/graph_saver'
 const ArtistView = ({ artistInfo }) => {
     return (
         <div>
+            <Link to="/">Home Page</Link>
             <h1>{artistInfo.name}</h1>
             <img src={artistInfo.images[1].url} />
             <p>genres: {artistInfo.genres.join(", ")}</p>
@@ -18,7 +19,6 @@ const ArtistView = ({ artistInfo }) => {
                 e.preventDefault()
             }}> Download </button>
             <br />
-            <Link to="/">Home Page</Link>
         </div>
     );
 }

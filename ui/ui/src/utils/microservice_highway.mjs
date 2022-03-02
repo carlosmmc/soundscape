@@ -1,6 +1,6 @@
 const populate_artist_view = async (navigate, setArtistInfo, searchTerm, spotifyToken) => {
     try {
-        const path = 'http://localhost:4000/artist'
+        const path = 'http://localhost:4000/compendium'
         const response = await fetch(path, {
             method: 'POST',
             body: JSON.stringify(
@@ -27,9 +27,9 @@ const generate_graph_url = async (data) => {
     const keys = []
     const vals = []
 
-    for (const key in data.style_analytics) {
+    for (const key in data.artist_analytics) {
         keys.push(key)
-        vals.push(data.style_analytics[key])
+        vals.push(data.artist_analytics[key])
     }
 
     const template = {

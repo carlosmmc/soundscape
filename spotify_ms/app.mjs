@@ -4,7 +4,7 @@
 import express from 'express'
 import SpotifyWebApi from 'spotify-web-api-node'
 import 'dotenv/config'
-import { artist_compendium } from './utils/artist.mjs'
+import { compendium_creation } from './utils/connector.mjs'
 import { error_catcher, error_handler } from './utils/errorHelper.mjs'
 import allow_cross_domain from './utils/CORS.mjs'
 
@@ -28,7 +28,7 @@ app.use(allow_cross_domain);
 app.use(express.json())
 
 // endpoints
-app.post('/artist', error_catcher(artist_compendium))
+app.post('/compendium', error_catcher(compendium_creation))
 
 // error handling
 app.use(error_handler)
