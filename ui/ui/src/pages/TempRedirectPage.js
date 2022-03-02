@@ -1,13 +1,13 @@
 import '../styling/error.css'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { set_spotify_token } from '../utils/spotify_conn.mjs'
+import { init_spotify_conn, set_users_name } from '../utils/spotify_conn.mjs'
 
-const TempRedirectPage = ({ setSpotifyToken }) => {
+const TempRedirectPage = ({ setSpotifyToken, setUsersName }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        set_spotify_token(setSpotifyToken)
+        init_spotify_conn(setSpotifyToken, setUsersName)
         navigate("/")
     }, [])
 

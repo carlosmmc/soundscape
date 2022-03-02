@@ -23,4 +23,15 @@ const compendium_creation = async (req, res, next) => {
     res.send(JSON.stringify(compendium))
 }
 
-export { compendium_creation }
+/**
+ * gets a logged in users first name
+ */
+const user_info = async (req, res, next) => {
+    const { spotify_conn } = req
+    spotify_conn.setAccessToken(req.body.token)
+    const response = await spotify_conn.getMe()
+    const first_name = response.body.display_name.split(" ")[0]
+    res.send(JSON.stringify({ first_name }))
+}
+
+export { compendium_creation, user_info }

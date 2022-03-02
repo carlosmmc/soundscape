@@ -5,13 +5,17 @@ import { useState } from 'react'
 import populate_artist_view from '../utils/microservice_highway.mjs'
 import { spotify_login } from '../utils/spotify_conn.mjs'
 
-const Home = ({ setArtistInfo, spotifyToken }) => {
+const Home = ({ setArtistInfo, spotifyToken, usersName }) => {
     const [searchTerm, setSearchTerm] = useState('')
     const navigate = useNavigate()
 
     return (
         <div className="HomePage">
-            <button onClick={spotify_login}> Login </button>
+            {
+                (spotifyToken !== '') ?
+                    <p>Welcome, {usersName}</p> :
+                    <button onClick={e => { spotify_login() }}> Login </button>
+            }
             <h1 className="HomeTitle">soundscape</h1>
             <form>
                 <input className="HomeInput" type="text" placeholder="Artist Name" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />

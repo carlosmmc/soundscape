@@ -1,6 +1,10 @@
 import querystring from 'querystring'
 import { Buffer } from 'buffer'
 
+
+/**
+ * redirects to spotify auth page
+ */
 const spotify_login = () => {
     const redirect_url = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
@@ -13,7 +17,10 @@ const spotify_login = () => {
     window.location = redirect_url
 }
 
-const set_spotify_token = async (setSpotifyToken) => {
+/**
+ * sets the spotify token and the logged in users name
+ */
+const init_spotify_conn = async (setSpotifyToken, setUsersName) => {
     const code = window.location.search.substring(1).split('code=')[1]
     const url = 'https://accounts.spotify.com/api/token'
     const bodyToEncode = {
@@ -40,6 +47,22 @@ const set_spotify_token = async (setSpotifyToken) => {
     const data = await response.json()
     const token = data['access_token']
     setSpotifyToken(token)
+    set_users_name(token, setUsersName)
 }
 
-export { spotify_login, set_spotify_token }
+/**
+ * sets a logged in users name 
+ */
+const set_users_name = async (token, setUsersName) => {
+    const path = 'http://localhost:4000/user'
+    const response = await fetch(path, {
+        method: 'POST',
+        body: JSON.stringify({ 'token': token }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+
+    const data = await response.json()
+    setUsersName(data['first_name'])
+}
+
+export { spotify_login, init_spotify_conn }
