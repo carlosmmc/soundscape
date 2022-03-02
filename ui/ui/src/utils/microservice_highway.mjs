@@ -23,39 +23,76 @@ const populate_artist_view = async (navigate, setArtistInfo, searchTerm, spotify
     }
 }
 
-const generate_graph_url = async (data) => {
-    const keys = []
-    const vals = []
+const generate_graph_url = async (spotify_info) => {
+    const labels = []
+    const artist_data = []
+    const user_data = []
 
-    for (const key in data.artist_analytics) {
-        keys.push(key)
-        vals.push(data.artist_analytics[key])
+    for (const key in spotify_info.artist_analytics) {
+        labels.push(key)
+        artist_data.push(spotify_info.artist_analytics[key])
+        user_data.push(spotify_info.user_analytics[key])
     }
 
     const template = {
         config: {
             type: 'radar',
             data: {
-                labels: keys,
+                labels,
                 datasets: [
                     {
-                        lineTension: .5,
-                        backgroundColor: 'rgba(178, 201, 235, 0.4)',
-                        borderColor: 'rgb(178, 201, 235)',
-                        pointBackgroundColor: 'rgba(94, 154, 238, 0.99)',
-                        data: vals,
-                        pointHoverRadius: 30,
+                        lineTension: .4,
+                        backgroundColor: 'rgba(33, 0, 112, 0.4)',
+                        borderColor: 'rgb(33, 0, 112)',
+                        pointBackgroundColor: 'rgba(33, 0, 112, 0.99)',
+                        data: artist_data,
+                        pointRadius: 2,
+                        borderWidth: 1,
+                        label: spotify_info.name
                     },
+                    {
+                        lineTension: .4,
+                        backgroundColor: 'rgba(123, 216, 195, 0.4)',
+                        borderColor: 'rgb(123, 216, 195)',
+                        pointBackgroundColor: 'rgba(123, 216, 195, 0.99)',
+                        data: user_data,
+                        pointRadius: 2,
+                        borderWidth: 1,
+                        label: "Your Top Tracks"
+                    }
                 ],
             },
             options: {
-                legend: { display: false },
-                title: { display: true, text: 'Musical Analysis' },
-                scale: { ticks: { display: false } },
+                legend: {
+                    display: true,
+                    labels: {
+                        fontSize: 7,
+                        boxWidth: 7,
+                        padding: 3
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Musical Analysis',
+                    fontSize: 9,
+                    padding: 3
+                },
+                scale: {
+                    pointLabels: {
+                        fontSize: 6,
+                    },
+                    ticks: {
+                        display: true,
+                        beginAtZero: true,
+                        max: 100,
+                        stepSize: 25,
+                        fontSize: 7,
+                    }
+                },
             }
         },
-        width: 320,
-        height: 240
+        width: 300,
+        height: 250
     }
 
     const path = 'http://localhost:8000/generateGraph'

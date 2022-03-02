@@ -21,7 +21,7 @@ const analyze_track_ids = async (spotify_conn, track_ids) => {
     }
 
     for (const feature of Object.keys(style_analytics)) {
-        style_analytics[feature] /= num_tracks
+        style_analytics[feature] *= (100 / num_tracks)
     }
 
     return style_analytics

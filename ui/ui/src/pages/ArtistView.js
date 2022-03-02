@@ -9,7 +9,7 @@ const ArtistView = ({ artistInfo }) => {
             <h1>{artistInfo.name}</h1>
             <img src={artistInfo.images[1].url} />
             <p>genres: {artistInfo.genres.join(", ")}</p>
-            <p>popularity: {artistInfo.popularity}%</p>
+            <p>spotify popularity: {artistInfo.popularity}%</p>
             <p>followers: {artistInfo.followers.toLocaleString()}</p>
             <p>related artists: {artistInfo.related_artists.map(artist => artist.name).join(", ")}</p>
             <img src={artistInfo.graph_url} />
