@@ -2,6 +2,7 @@
 
 import { get_user_info } from './user_flow.mjs'
 import { get_artist_info } from './artist_flow.mjs'
+import { calc_similarity } from './utils.mjs'
 
 /**
  * main spotify connection logic which gets information about a given artist and user. it will return
@@ -18,6 +19,7 @@ const compendium_creation = async (req, res, next) => {
     ])
 
     compendium['user_analytics'] = user_analytics
+    compendium['similarity_metric'] = calc_similarity(compendium['artist_analytics'], compendium['user_analytics'])
     res.send(JSON.stringify(compendium))
 }
 

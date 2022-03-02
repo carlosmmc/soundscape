@@ -10,6 +10,7 @@ const ArtistView = ({ artistInfo }) => {
             <img src={artistInfo.images[1].url} />
             <p>genres: {artistInfo.genres.join(", ")}</p>
             <p>spotify popularity: {artistInfo.popularity}%</p>
+            <p>% your style matches with this artist: {Math.round(artistInfo.similarity_metric * 100)}%</p>
             <p>followers: {artistInfo.followers.toLocaleString()}</p>
             <p>related artists: {artistInfo.related_artists.map(artist => artist.name).join(", ")}</p>
             <img src={artistInfo.graph_url} />

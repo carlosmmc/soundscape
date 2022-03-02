@@ -38,4 +38,16 @@ const compile_results = (artist_results, artist_analytics, top_track_ids, relate
     return compendium
 }
 
-export { analyze_track_ids, compile_results }
+const calc_similarity = (style_1, style_2) => {
+    let metric = 0
+
+    for (const key in style_1) {
+        metric += (style_1[key] - style_2[key]) ** 2
+    }
+
+    metric = (1 - (metric / (Object.keys(style_1).length * 10000)))
+    metric = (Math.max(metric, .7) - .7) / .3
+    return metric
+}
+
+export { analyze_track_ids, compile_results, calc_similarity }
