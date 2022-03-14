@@ -23,14 +23,8 @@ const spotify_login = () => {
 const init_spotify_conn = async (setSpotifyToken, setUsersName) => {
     const code = window.location.search.substring(1).split('code=')[1]
     const url = 'https://accounts.spotify.com/api/token'
-    const bodyToEncode = {
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: process.env.REACT_APP_REDIRECT_URI,
-    }
+    const body = `grant_type=${encodeURIComponent("authorization_code")}&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(process.env.REACT_APP_REDIRECT_URI)}`
 
-    // https://stackoverflow.com/questions/35325370/how-do-i-post-a-x-www-form-urlencoded-request-using-fetch
-    const body = Object.entries(bodyToEncode).map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&')
     const headers = {
         'Authorization': 'Basic ' +
             (new Buffer(process.env.REACT_APP_SPOTIFY_CLIENT_ID +
