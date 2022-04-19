@@ -1,3 +1,5 @@
+<kbd><img src="images/display_viz.gif" /></kbd>
+
 ### Description
   <p>A React app which allows users to compare their spotify listening history to a new artist. Implemented using the microservice architecture with the following three services working to serve results on the frontend:
   <li><b>spotify_ms</b> - queries spotify for info about a given user or an artist </li>
